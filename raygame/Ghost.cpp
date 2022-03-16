@@ -6,6 +6,7 @@
 #include "PathfindComponent.h"
 #include "MoveComponent.h"
 #include "SpriteComponent.h"
+#include "WanderComponent.h"
 
 Ghost::Ghost(float x, float y, float maxSpeed, float maxForce, int color, Maze* maze)
 	: Agent(x, y, "Ghost", maxSpeed, maxForce)
@@ -27,6 +28,11 @@ Ghost::~Ghost()
 void Ghost::update(float deltaTime)
 {
 	Agent::update(deltaTime);
+
+	getTarget();
+	WanderComponent* wander = new WanderComponent(100, 100, 50);
+	wander->setTarget(m_target);
+	addComponent(wander);
 }
 
 void Ghost::draw()
