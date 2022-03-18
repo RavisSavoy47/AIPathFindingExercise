@@ -10,7 +10,7 @@
 
 void MainScene::start()
 {
-	Player* player = new Player(200, 50, "Player", 100, 50);
+	Player* player = new Player(200, 50, "Player", 100, 100);
 	player->getTransform()->setScale({ 50,50 });
 	player->addComponent(new SpriteComponent("Images/player.png"));
 
