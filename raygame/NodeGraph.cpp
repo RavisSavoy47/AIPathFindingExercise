@@ -48,12 +48,23 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 	DynamicArray<NodeGraph::Node*> openList = DynamicArray<NodeGraph::Node*>();
 	DynamicArray<NodeGraph::Node*> closedList = DynamicArray<NodeGraph::Node*>();
 	
-	while (openList.contains >= 0)
+	openList.addItem(start);
+	while (openList.getLength() > 0)
 	{
-		
+		for (int i = 0; i < openList[0]->edges.getLength(); i++)
+		{
+			NodeGraph::Node* targetNode = openList[0]->edges[i].target;
+			targetNode->gScore = openList[0]->gScore + openList[0]->edges[i].cost;
+			targetNode->previous = openList[0];
+
+			if (!closedList.contains(targetNode) && !openList.contains(targetNode))
+				openList.addItem(targetNode);
+		}
+		closedList.addItem(openList[0]);
+		openList.remove(openList[0]);
 	};
 
-	return DynamicArray<NodeGraph::Node*>();
+	return reconstructPath(goal, start);
 }
 
 void NodeGraph::drawGraph(Node* start)
