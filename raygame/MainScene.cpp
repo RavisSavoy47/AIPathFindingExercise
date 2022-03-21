@@ -10,7 +10,7 @@
 
 void MainScene::start()
 {
-	Player* player = new Player(200, 50, "Player", 100, 100);
+	Player* player = new Player(200, 50, "Player", 100, 500);
 	player->getTransform()->setScale({ 50,50 });
 	player->addComponent(new SpriteComponent("Images/player.png"));
 
@@ -22,7 +22,7 @@ void MainScene::start()
 	agent->addComponent(wanderComponent);
 
 	SeekComponent* seekComponent = new SeekComponent();
-	seekComponent->setSteeringForce(50);
+	seekComponent->setSteeringForce(500);
 	seekComponent->setTarget(player);
 	agent->addComponent(seekComponent);
 	agent->addComponent<StateMachineComponent>();

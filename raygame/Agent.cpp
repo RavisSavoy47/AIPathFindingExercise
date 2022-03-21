@@ -6,7 +6,7 @@
 float maxSpeedRef = 0;
 Agent::Agent(float x, float y, const char* name, float maxSpeed, float maxForce) : Actor(x, y, name)
 {
-	setMaxForce(maxForce);
+	setMaxForce(350);
 	maxSpeedRef = maxSpeed;
 }
 
