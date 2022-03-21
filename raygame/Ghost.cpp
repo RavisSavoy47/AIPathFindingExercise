@@ -28,11 +28,6 @@ Ghost::~Ghost()
 void Ghost::update(float deltaTime)
 {
 	Agent::update(deltaTime);
-
-	getTarget();
-	WanderComponent* wander = new WanderComponent(100, 100, 50);
-	wander->setTarget(m_target);
-	addComponent(wander);
 }
 
 void Ghost::draw()
