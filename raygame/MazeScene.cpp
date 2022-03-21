@@ -1,6 +1,7 @@
 #include "MazeScene.h"
 #include "Player.h"
 #include "Wall.h"
+#include "Mud.h"
 #include "Ghost.h"
 #include "Transform2D.h"
 
@@ -30,7 +31,7 @@ Maze::Maze()
 		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, w, w, _, w, w, _, w, w, w, _, _, _, w, w, _, _, _, w, w, w, _, w, w, _, w, w, w },
 		{ w, w, w, _, w, w, _, w, _, w, _, w, _, _, _, _, w, _, w, _, w, _, w, w, _, w, w, w },
-		{ w, w, w, _, w, w, _, w, _, w, _, w, _, _, _, _, w, _, w, _, w, _, w, w, _, w, w, w },
+		{ w, w, w, _, w, w, _, w, _, w, _, w, s, s, s, s, w, _, w, _, w, _, w, w, _, w, w, w },
 		{ w, _, _, _, _, _, _, w, w, w, _, w, _, _, _, _, w, _, w, w, w, _, _, _, _, _, _, w },
 		{ w, _, w, _, w, _, _, _, _, _, _, w, _, w, w, _, w, _, _, _, _, _, _, w, _, w, _, w },
 		{ w, _, w, _, w, _, w, _, _, _, _, _, _, w, w, _, _, _, _, _, _, w, _, w, _, w, _, w },
@@ -103,6 +104,12 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		tile.cost = 100.0f;
 		tile.actor = new Wall(position.x, position.y);
 		tile.node->walkable = false;
+		addActor(tile.actor);
+		break;
+	case TileKey::MUD:
+		tile.cost = 200.0f;
+		tile.actor = new Mud(position.x, position.y);
+		tile.node->walkable = true;
 		addActor(tile.actor);
 		break;
 	case TileKey::PLAYER:

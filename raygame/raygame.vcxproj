@@ -159,6 +159,7 @@
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="MazeScene.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
+    <ClCompile Include="Mud.cpp" />
     <ClCompile Include="NodeGraph.cpp" />
     <ClCompile Include="PathfindComponent.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="MazeScene.h" />
     <ClInclude Include="MoveComponent.h" />
+    <ClInclude Include="Mud.h" />
     <ClInclude Include="NodeGraph.h" />
     <ClInclude Include="PathfindComponent.h" />
     <ClInclude Include="Player.h" />
