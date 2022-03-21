@@ -38,5 +38,5 @@ namespace NodeGraph
 	void resetGraphScore(Node* start);
 	void resetConnectedNodes(Node* node, DynamicArray<Node*>& resetList);
 
-	int manHattanDistance(int X1, int Y1, int X2, int Y2);
+	float manHattanDistance(Node* node, Node* goal);
 }

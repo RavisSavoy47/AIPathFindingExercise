@@ -63,10 +63,9 @@ void sortGScore(DynamicArray<NodeGraph::Node*>& nodes)
 	}
 }
 
-int NodeGraph::manHattanDistance(int X1, int Y1, int X2, int Y2)
+float NodeGraph::manHattanDistance(Node* node, Node* goal)
 {
-	int dist = abs(X2 - X1) + abs(Y2 - Y1);
-	return dist;
+	return abs(node->position.x - goal->position.x) + abs(node->position.y - goal->position.y);
 }
 
 DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
@@ -81,28 +80,31 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 
 	while (openList.getLength() > 0)
 	{
-		sortGScore(openList);
+		sortFScore(openList);
 		currentNode = openList[0];
 		openList.remove(currentNode);
 
 		if (!closedList.contains(currentNode))
 		{
-
 			//For each of the nodes next to the current node set the g scores of each and set
 			for (int i = 0; i < currentNode->edges.getLength(); i++)
 			{
 				
 				NodeGraph::Node* targetNode = currentNode->edges[i].target;
-				targetNode->color = 0xFF0000FF;
-				manHattanDistance(currentNode->gScore, currentNode->gScore, targetNode->gScore, targetNode->gScore);
+				
 				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
 				{
 					targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
+					targetNode->hScore = manHattanDistance(currentNode, goal);
+					targetNode->fScore = targetNode->gScore + targetNode->hScore;
 					targetNode->previous = currentNode;
+					
 				}
 				if (!openList.contains(targetNode))
+				{
 					openList.addItem(targetNode);
-					
+					targetNode->color = 0xFF0000FF;
+				}	
 			}
 			closedList.addItem(currentNode);
 		}
