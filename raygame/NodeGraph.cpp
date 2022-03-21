@@ -95,9 +95,7 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 					targetNode->previous = currentNode;
 				}
 				if (!openList.contains(targetNode))
-				{
 					openList.addItem(targetNode);
-				}
 					
 			}
 			closedList.addItem(currentNode);
