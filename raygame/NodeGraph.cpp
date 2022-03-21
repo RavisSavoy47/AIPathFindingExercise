@@ -63,6 +63,12 @@ void sortGScore(DynamicArray<NodeGraph::Node*>& nodes)
 	}
 }
 
+int NodeGraph::manHattanDistance(int X1, int Y1, int X2, int Y2)
+{
+	int dist = abs(X2 - X1) + abs(Y2 - Y1);
+	return dist;
+}
+
 DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 {
 	resetGraphScore(start);
@@ -88,7 +94,7 @@ DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 				
 				NodeGraph::Node* targetNode = currentNode->edges[i].target;
 				targetNode->color = 0xFF0000FF;
-
+				manHattanDistance(currentNode->gScore, currentNode->gScore, targetNode->gScore, targetNode->gScore);
 				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
 				{
 					targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
@@ -171,3 +177,5 @@ void NodeGraph::resetConnectedNodes(Node* node, DynamicArray<Node*>& resetList)
 		}
 	}
 }
+
+
