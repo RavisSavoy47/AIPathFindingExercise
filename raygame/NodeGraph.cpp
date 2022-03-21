@@ -42,39 +42,70 @@ void sortFScore(DynamicArray<NodeGraph::Node*>& nodes)
 	}
 }
 
+/// <summary>
+/// Sorts by the g score
+/// </summary>
+/// <param name="nodes"></param>
+void sortGScore(DynamicArray<NodeGraph::Node*>& nodes)
+{
+	NodeGraph::Node* key = nullptr;
+	int j = 0;
+
+	for (int i = 1; i < nodes.getLength(); i++) {
+		key = nodes[i];
+		j = i - 1;
+		while (j >= 0 && nodes[j]->gScore > key->gScore) {
+			nodes[j + 1] = nodes[j];
+			j--;
+		}
+
+		nodes[j + 1] = key;
+	}
+}
+
 DynamicArray<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* goal)
 {
+	resetGraphScore(start);
+	
 	//Insert algorithm here
 	DynamicArray<NodeGraph::Node*> openList = DynamicArray<NodeGraph::Node*>();
 	DynamicArray<NodeGraph::Node*> closedList = DynamicArray<NodeGraph::Node*>();
-	
+	Node* currentNode = start;
 	openList.addItem(start);
+
 	while (openList.getLength() > 0)
 	{
-		//For each of the nodes next to the current node set the g scores of each and set
-		for (int i = 0; i < openList[0]->edges.getLength(); i++)
+		sortGScore(openList);
+		currentNode = openList[0];
+		openList.remove(currentNode);
+
+		if (!closedList.contains(currentNode))
 		{
-			NodeGraph::Node* targetNode = openList[0]->edges[i].target;
 
-			if (!closedList.contains(targetNode) && !openList.contains(targetNode))
+			//For each of the nodes next to the current node set the g scores of each and set
+			for (int i = 0; i < currentNode->edges.getLength(); i++)
 			{
-				if (targetNode->gScore == 0 || targetNode->gScore > openList[0]->gScore + openList[0]->edges[i].cost)
-				{
-					targetNode->gScore = openList[0]->gScore + openList[0]->edges[i].cost;
-					targetNode->previous = openList[0];
-				}
+				
+				NodeGraph::Node* targetNode = currentNode->edges[i].target;
+				targetNode->color = 0xFF0000FF;
 
-				openList.addItem(targetNode);
+				if (targetNode->gScore == 0 || targetNode->gScore > currentNode->gScore + currentNode->edges[i].cost)
+				{
+					targetNode->gScore = currentNode->gScore + currentNode->edges[i].cost;
+					targetNode->previous = currentNode;
+				}
+				if (!openList.contains(targetNode))
+				{
+					openList.addItem(targetNode);
+				}
+					
 			}
+			closedList.addItem(currentNode);
 		}
 
-		closedList.addItem(openList[0]);
-		openList.remove(openList[0]);
+		if(currentNode == goal)
+			return reconstructPath(start, goal);
 	};
-
-	return reconstructPath(start, goal);
-
-	//return DynamicArray<NodeGraph::Node*>();
 }
 
 void NodeGraph::drawGraph(Node* start)
